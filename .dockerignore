@@ -1,0 +1,4 @@
+.gitignore
+/jenkins_tuto
+.vscode
+.idea
