@@ -5,15 +5,13 @@ pipeline {
       parallel {
         stage('git pull') {
           steps {
-            sh '''cd cicd_test
-git pull'''
+            sh 'git pull'
           }
         }
 
         stage('test') {
           steps {
-            sh '''cd cicd_test
-python manage.py test'''
+            sh 'python manage.py test'
           }
         }
 
