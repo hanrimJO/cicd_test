@@ -16,7 +16,9 @@ pipeline {
         }
         stage('docker push to dockerhub'){
             docker.withRegistry("https://registry.hub.docker.com", $registryCredential){
-                sh 'docker push riverforest02/my_django:latest'
+                steps{
+                    sh 'docker push riverforest02/my_django:latest'
+                }
             }
         }
     }
