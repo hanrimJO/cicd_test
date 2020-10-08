@@ -23,7 +23,7 @@ pipeline {
         stage('docker push to dockerhub'){
             steps{
                 script{
-                    withCredentials([usernamePassword( credentialsId: 'dockerhub_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword( credentialsId: 'dockerhub_id')]) {
                         def registry_url = "https://registry.hub.docker.com"
                         sh "docker info | grep Username"
                         // sh "docker login -u $USER -p $PASSWORD ${registry_url}"
