@@ -23,11 +23,12 @@ pipeline {
         stage('docker push to dockerhub'){
             steps{
                 script{
-                    withCredentials([usernamePassword( credentialsId: 'dockerhub_id')]) {
+                    withCredentials([usernamePassword( credentialsId: 'dockerhub_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         def registry_url = "https://registry.hub.docker.com"
+                        
+                        sh "docker login -u $USER -p $PASSWORD ${registry_url}"
                         sh "docker info | grep Username"
-                        // sh "docker login -u $USER -p $PASSWORD ${registry_url}"
-                        docker.withRegistry("${registry_url}", "dockerhub_id") {
+                        docker.withRegistry("${registry_url}") {
                             sh "docker push riverforest02/my_django:latest"
                         }
                     }
