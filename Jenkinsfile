@@ -43,7 +43,8 @@ pipeline {
                         sh "docker login -u $USER -p $PASSWORD ${registry_url}"
                         
                         docker.withRegistry("${registry_url}") {
-                            sh "docker push ${registry_url}/riverforest02/my_django:latest"
+                            sh "docker tag riverforest02/my_django:latest ${registry_url}/my_django:latest"
+                            sh "docker push ${registry_url}/my_django:latest"
                         }
                     }
                 }
