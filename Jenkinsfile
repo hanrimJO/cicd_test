@@ -8,7 +8,7 @@ pipeline {
         }
         stage('build docker image'){
             steps{
-                sh 'docker build -t my_django:latest'
+                sh 'docker build -t my_django:latest .'
             }
         }
         stage('docker push acr'){
