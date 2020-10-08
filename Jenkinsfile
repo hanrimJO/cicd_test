@@ -43,7 +43,8 @@ pipeline {
         }
         stage('delete docker image'){
             steps {
-                sh "docker rmi \$(docker images -q)"
+                sh "docker rmi riverforest02/my_django:latest"
+                sh "docker rmi hrjotest.azurecr.io/my_django:latest"
             }
         }
     }
