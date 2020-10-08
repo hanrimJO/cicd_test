@@ -1,7 +1,4 @@
 pipeline {
-    environment {
-        registryCredential = 'dockerhub_id'
-    }
     agent any
     stages {
         stage('test echo'){
@@ -17,7 +14,7 @@ pipeline {
         stage('docker push to dockerhub'){
             steps{
                 script{
-                    docker.withRegistry("https://registry.hub.docker.com", $registryCredential){
+                    docker.withRegistry("https://registry.hub.docker.com", "dockerhub_id"){
                         sh 'docker push riverforest02/my_django:latest'
                     }
                 }
