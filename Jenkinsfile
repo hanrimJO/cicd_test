@@ -1,7 +1,6 @@
 pipeline {
     environment {
-        dockeruser = 'riverforest02'
-        dockerpw = 'k7654892!@'
+        registryCredential = 'dockerhub_id'
     }
     agent any
     stages {
@@ -17,8 +16,9 @@ pipeline {
         }
         stage('docker push acr'){
             steps{
-                sh 'docker login -u $dockeruser -p $dockerpw'
-                sh 'docker push riverforest02/my_django:latest'
+                withDockerRegistry([credentialsId: registryCredential, url: ""]){
+                    sh 'docker push riverforest02/my_django:latest'
+                }
             }
         }
     }
