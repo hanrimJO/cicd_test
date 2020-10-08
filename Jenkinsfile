@@ -44,7 +44,7 @@ pipeline {
         stage('delete docker image'){
             steps{
                 sh "docker images"
-                sh "docker rmi $(docker images -q)"
+                sh "docker rmi ${docker images -q}"
             }
         }
     }
