@@ -2,12 +2,12 @@ pipeline {
     agent any
     stages {
         stage('test echo'){
-            steps{
+            steps {
                 sh 'echo test 3'
             }
         }
         stage('build docker image'){
-            steps{
+            steps {
                 sh 'docker build -t riverforest02/my_django:latest .'
             }
         }
@@ -27,7 +27,7 @@ pipeline {
         //     }
         // }
         stage('docker push to azurecr'){
-            steps{
+            steps {
                 script{
                     withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         def registry_url = "hrjotest.azurecr.io"
@@ -42,8 +42,8 @@ pipeline {
             }
         }
         stage('delete docker image'){
-            steps{
-                sh "docker rmi ${docker images -q}"
+            steps {
+                sh "docker rmi \$(docker images -q)"
             }
         }
     }
