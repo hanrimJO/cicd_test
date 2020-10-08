@@ -25,7 +25,7 @@ pipeline {
                 script{
                     withCredentials([usernamePassword( credentialsId: 'dockerhub_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         def registry_url = "https://registry.hub.docker.com"
-                        bat "docker login -u $USER -p $PASSWORD ${registry_url}"
+                        sh "docker login -u $USER -p $PASSWORD ${registry_url}"
                         docker.withRegistry("${registry_url}", "dockerhub_id") {
                             sh "docker push riverforest02/my_django:latest"
                         }
