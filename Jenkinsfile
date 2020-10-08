@@ -6,9 +6,15 @@ pipeline {
                 sh 'echo test 3'
             }
         }
-        stage('run docker-compose'){
+        stage('build docker image'){
             steps{
-                sh 'docker-compose up --build'
+                sh 'docker build -t my_django:latest'
+            }
+        }
+        stage('docker push acr'){
+            steps{
+                sh 'docker login hrjotest.azurecr.io'
+                sh 'docker push hrjotest.azurecr.io/test/my_django:latest'
             }
         }
     }
