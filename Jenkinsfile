@@ -14,27 +14,18 @@ pipeline {
         // stage('docker push to dockerhub'){
         //     steps{
         //         script{
-        //             docker.withRegistry("https://registry.hub.docker.com", 'dockerhub_id'){
-        //                 sh 'docker push riverforest02/my_django:latest'
+        //             withCredentials([usernamePassword( credentialsId: 'dockerhub_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+        //                 def registry_url = "https://registry.hub.docker.com"
+                        
+        //                 sh "docker login -u $USER -p $PASSWORD ${registry_url}"
+                        
+        //                 docker.withRegistry("${registry_url}") {
+        //                     sh "docker push riverforest02/my_django:latest"
+        //                 }
         //             }
         //         }
         //     }
         // }
-        stage('docker push to dockerhub'){
-            steps{
-                script{
-                    withCredentials([usernamePassword( credentialsId: 'dockerhub_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                        def registry_url = "https://registry.hub.docker.com"
-                        
-                        sh "docker login -u $USER -p $PASSWORD ${registry_url}"
-                        
-                        docker.withRegistry("${registry_url}") {
-                            sh "docker push riverforest02/my_django:latest"
-                        }
-                    }
-                }
-            }
-        }
         stage('docker push to azurecr'){
             steps{
                 script{
@@ -48,6 +39,12 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+        stage('delete docker image'){
+            steps{
+                sh "docker images"
+                sh "docker rmi $(docker images -q)"
             }
         }
     }
