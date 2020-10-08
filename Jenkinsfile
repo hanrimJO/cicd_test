@@ -26,10 +26,24 @@ pipeline {
                     withCredentials([usernamePassword( credentialsId: 'dockerhub_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         def registry_url = "https://registry.hub.docker.com"
                         
-                        // sh "docker login -u $USER -p $PASSWORD ${registry_url}"
+                        sh "docker login -u $USER -p $PASSWORD ${registry_url}"
                         
-                        docker.withRegistry("${registry_url}", "dockerhub_id") {
+                        docker.withRegistry("${registry_url}") {
                             sh "docker push riverforest02/my_django:latest"
+                        }
+                    }
+                }
+            }
+        }
+        stage('docker push to azurecr'){
+            steps{
+                script{
+                    withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                        def registry_url = "hrjotest.azurecr.io"
+                        sh "docker login -u $USER -p $PASSWORD ${registry_url}"
+                        
+                        docker.withRegistry("${registry_url}") {
+                            sh "docker push ${registry_url}/riverforest02/my_django:latest"
                         }
                     }
                 }
