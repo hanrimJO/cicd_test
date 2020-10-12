@@ -8,6 +8,7 @@ pipeline {
             steps {
                 sh 'echo test 3'
                 sh 'echo ${AZURECR}'
+                sh 'echo $AZURECR'
             }
         }
         stage('build docker image'){
