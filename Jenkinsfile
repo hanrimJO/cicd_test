@@ -73,7 +73,7 @@ pipeline {
                         }
                     }
                     sh 'ssh azureuser@20.194.25.143 "cd cicd_test && git pull"'
-                    sh 'ssh azureuser@20.194.25.143 "cd cicd_test && sudo docker-compose up --build"'
+                    sh 'ssh azureuser@20.194.25.143 "cd cicd_test && sudo docker-compose up --build -d"'
                 }
             }
         }
