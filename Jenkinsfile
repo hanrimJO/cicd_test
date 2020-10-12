@@ -55,7 +55,7 @@ pipeline {
         //         }
         //     }
         // }
-        node {
+        stage {
             sshagent (credentials: ['deploy_id']) {
                 sh 'ssh -o StrictHostKeyChecking=no -l azureuser 20.194.25.143 uname -a'
                 sh 'ssh azureuser@20.194.25.143 "mkdir test"'
