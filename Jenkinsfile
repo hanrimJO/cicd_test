@@ -62,6 +62,7 @@ pipeline {
                     script{
                         withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                             def registry_url = "hrjotest.azurecr.io"
+                            sh 'echo ${USER}'
                             sh 'ssh azureuser@20.194.25.143 "sudo docker login -u $USER -p $PASSWORD ${registry_url}"'
                         }
                     }
