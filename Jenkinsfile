@@ -1,7 +1,7 @@
 pipeline {
     environment{
         LOCALIMAGE = 'riverforest02/my_django:latest'
-        AZUREIMAGE = 'hrjotest.azurecr.io/my_django:latest'
+        AZUREIMAGE = 'hrjotest.azurecr.io/my_django'
         AZURECR = 'hrjotest.azurecr.io'
     }
     agent any
