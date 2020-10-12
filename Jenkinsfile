@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('test'){
             steps {
-                sh 'cd cicd_test && python manage.py test'
+                sh 'pwd && python3 manage.py test'
             }
         }
         stage('build docker image'){
