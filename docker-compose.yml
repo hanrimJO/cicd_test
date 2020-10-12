@@ -29,8 +29,8 @@ services:
     #   context: .
       # dockerfile: Dockerfile
     image: hrjotest.azurecr.io/my_django:latest
-    # volumes:
-    #   - .:/django/
+    volumes:
+      - .:/django/
     expose:
       - "8000"
     # depends_on:
