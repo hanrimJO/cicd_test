@@ -1,7 +1,7 @@
 pipeline {
     environment{
         LOCALIMAGE = 'riverforest02/my_django:latest'
-        AZUREIMAGE = 'hrjotest.azurecr.io/my_django'
+        AZUREIMAGE = 'hrjotest.azurecr.io/my_django:latest'
         AZURECR = 'hrjotest.azurecr.io'
     }
     agent any
@@ -73,6 +73,7 @@ pipeline {
                         }
                     }
                     sh 'ssh azureuser@20.194.25.143 "cd cicd_test && git pull"'
+                    sh 'ssh azureuser@20.194.25.143 "sudo docker pull hrjotest.azurecr.io/my_django:latest"'
                     sh 'ssh azureuser@20.194.25.143 "cd cicd_test && sudo docker-compose up --build -d"'
                 }
             }
