@@ -1,5 +1,7 @@
 pipeline {
     environment{
+        LOCALIMAGE = 'riverforest02/my_django:latest'
+        AZUREIMAGE = 'hrjotest.azurecr.io/my_django:latest'
         AZURECR = 'hrjotest.azurecr.io'
     }
     agent any
@@ -7,13 +9,11 @@ pipeline {
         stage('test echo'){
             steps {
                 sh 'echo test 3'
-                sh 'echo ${AZURECR}'
-                sh 'echo $AZURECR'
             }
         }
         stage('build docker image'){
             steps {
-                sh 'docker build -t riverforest02/my_django:latest .'
+                sh 'docker build -t $LOCALIMAGE .'
             }
         }
         // stage('docker push to dockerhub'){
@@ -38,9 +38,9 @@ pipeline {
                         // def registry_url = "hrjotest.azurecr.io"
                         sh "docker login -u $USER -p $PASSWORD $AZURECR"
                         
-                        docker.withRegistry("${registry_url}") {
-                            sh "docker tag riverforest02/my_django:latest ${registry_url}/my_django:latest"
-                            sh "docker push ${registry_url}/my_django:latest"
+                        docker.withRegistry("$AZURECR") {
+                            sh "docker tag $LOCALIMAGE $AZUREIMAGE"
+                            sh "docker push $AZUREIMAGE"
                         }
                     }
                 }
@@ -48,8 +48,8 @@ pipeline {
         }
         stage('delete docker image'){
             steps {
-                sh "docker rmi riverforest02/my_django:latest"
-                sh "docker rmi hrjotest.azurecr.io/my_django:latest"
+                sh "docker rmi $LOCALIMAGE"
+                sh "docker rmi $AZUREIMAGE"
             }
         }
         // stage('ssh'){
