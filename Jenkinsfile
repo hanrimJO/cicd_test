@@ -37,12 +37,12 @@ pipeline {
                     withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                         // def registry_url = "hrjotest.azurecr.io"
                         sh "docker login -u $USER -p $PASSWORD $AZURECR"
-                        sh "docker tag $LOCALIMAGE $AZUREIMAGE"
-                        sh "docker push $AZUREIMAGE"
-                        // docker.withRegistry("$AZURECR") {
-                        //     sh "docker tag $LOCALIMAGE $AZUREIMAGE"
-                        //     sh "docker push $AZUREIMAGE"
-                        // }
+                        // sh "docker tag $LOCALIMAGE $AZUREIMAGE"
+                        // sh "docker push $AZUREIMAGE"
+                        docker.withRegistry("$AZURECR") {
+                            sh "docker tag $LOCALIMAGE $AZUREIMAGE"
+                            sh "docker push $AZUREIMAGE"
+                        }
                     }
                 }
             }
