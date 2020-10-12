@@ -13,7 +13,7 @@ pipeline {
         }
         stage('build docker image'){
             steps {
-                sh 'docker build -t $LOCALIMAGE .'
+                sh 'docker build --pull=true -t $LOCALIMAGE .'
             }
         }
         // stage('docker push to dockerhub'){
