@@ -61,8 +61,8 @@ pipeline {
                     sh 'ssh -o StrictHostKeyChecking=no -l azureuser 20.194.25.143 uname -a'
                     script{
                         withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                            def registry_url = "hrjotest.azurecr.io"
-                            sh 'ssh azureuser@20.194.25.143 "sudo docker login -u $USER -p $PASSWORD ${registry_url}"'
+                            // def registry_url = "hrjotest.azurecr.io"
+                            sh 'ssh azureuser@20.194.25.143 "sudo docker login -u $USER -p $PASSWORD hrjotest.azurecr.io"'
                         }
                     }
                     sh 'ssh azureuser@20.194.25.143 "cd cicd_test && git pull"'
