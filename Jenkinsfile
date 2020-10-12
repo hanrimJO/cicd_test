@@ -7,9 +7,9 @@ pipeline {
     agent any
     stages {
         stage('test'){
-            steps {
-                sh 'pwd && python3 manage.py test'
-            }
+            // steps {
+            //     sh 'pwd && python3 manage.py test'
+            // }
         }
         stage('build docker image'){
             steps {
