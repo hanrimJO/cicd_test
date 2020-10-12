@@ -47,12 +47,18 @@ pipeline {
                 sh "docker rmi hrjotest.azurecr.io/my_django:latest"
             }
         }
-        stage('ssh'){
-            steps{
-                sshagent(credentials:[deploy_id]){
-                    sh 'ssh -o StrictHostKeyChecking=no azureuser@20.194.25.143 uptime'
-                    sh 'ssh azureuser@20.194.25.143 "mkdir test"'
-                }
+        // stage('ssh'){
+        //     steps{
+        //         sshagent(credentials:[deploy_id]){
+        //             sh 'ssh -o StrictHostKeyChecking=no azureuser@20.194.25.143 uptime'
+        //             sh 'ssh azureuser@20.194.25.143 "mkdir test"'
+        //         }
+        //     }
+        // }
+        node {
+            sshagent (credentials: ['deploy_id']) {
+                sh 'ssh -o StrictHostKeyChecking=no -l azureuser 20.194.25.143 uname -a'
+                sh 'ssh azureuser@20.194.25.143 "mkdir test"'
             }
         }
     }
