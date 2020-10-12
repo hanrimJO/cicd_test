@@ -13,7 +13,7 @@ pipeline {
         }
         stage('build docker image'){
             steps {
-                sh 'docker build --no-cache=true -t $LOCALIMAGE .'
+                sh 'docker build -t $LOCALIMAGE .'
             }
         }
         // stage('docker push to dockerhub'){
