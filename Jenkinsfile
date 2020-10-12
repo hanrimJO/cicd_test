@@ -6,9 +6,9 @@ pipeline {
     }
     agent any
     stages {
-        stage('test echo'){
+        stage('test'){
             steps {
-                sh 'echo test 3'
+                sh 'python manage.py test'
             }
         }
         stage('build docker image'){
