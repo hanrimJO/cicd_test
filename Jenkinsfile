@@ -59,9 +59,11 @@ pipeline {
             steps{
                 sshagent (credentials: ['deploy_id']) {
                     sh 'ssh -o StrictHostKeyChecking=no -l azureuser 20.194.25.143 uname -a'
-                    withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]){
-                        def registry_url = "hrjotest.azurecr.io"
-                        sh 'ssh azureuser@20.194.25.143 "docker login -u $USER -p $PASSWORD ${registry_url}"'
+                    script{
+                        withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                            def registry_url = "hrjotest.azurecr.io"
+                            sh 'ssh azureuser@20.194.25.143 "docker login -u $USER -p $PASSWORD ${registry_url}"'
+                        }
                     }
                     sh 'ssh azureuser@20.194.25.143 "cd cicd_test && git pull"'
                     sh 'ssh azureuser@20.194.25.143 "cd cicd_test && sudo docker-compose up -d --build"'
