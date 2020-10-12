@@ -25,10 +25,10 @@ services:
 #       - /var/run/docker.sock:/var/run/docker.sock
   web:
     container_name: django
-    build:
-      context: .
+    # build:
+    #   context: .
       # dockerfile: Dockerfile
-      image: hrjotest.azurecr.io/my_django:latest
+    image: hrjotest.azurecr.io/my_django:latest
     # volumes:
     #   - .:/django/
     expose:
