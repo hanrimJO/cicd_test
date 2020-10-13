@@ -41,14 +41,9 @@ pipeline {
             steps {
                 script{
                     withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                        // def registry_url = "hrjotest.azurecr.io"
                         sh "docker login -u $USER -p $PASSWORD $AZURECR"
                         sh "docker tag $LOCALIMAGE $AZUREIMAGE"
                         sh "docker push $AZUREIMAGE"
-                        // docker.withRegistry("$AZURECR") {
-                        //     sh "docker tag $LOCALIMAGE $AZUREIMAGE"
-                        //     sh "docker push $AZUREIMAGE"
-                        // }
                     }
                 }
             }
@@ -59,22 +54,12 @@ pipeline {
                 sh "docker rmi $AZUREIMAGE"
             }
         }
-        // stage('ssh'){
-        //     steps{
-        //         sshagent(credentials:[deploy_id]){
-        //             sh 'ssh -o StrictHostKeyChecking=no azureuser@20.194.25.143 uptime'
-        //             sh 'ssh azureuser@20.194.25.143 "mkdir test"'
-        //         }
-        //     }
-        // }
         stage('ssh deploy') {
             steps{
                 sshagent (credentials: ['deploy_id']) {
                     sh 'ssh -o StrictHostKeyChecking=no -l azureuser 20.194.25.143 uname -a'
-                    // sh 'ssh azureuser@20.194.25.143 "cd cicd_test && sudo docker-compose down"'
                     script{
                         withCredentials([usernamePassword( credentialsId: 'azurecr_id', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                            // def registry_url = "hrjotest.azurecr.io"
                             sh 'ssh azureuser@20.194.25.143 "sudo docker login -u $USER -p $PASSWORD $AZURECR"'
                         }
                     }
