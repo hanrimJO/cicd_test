@@ -11,6 +11,12 @@ pipeline {
                 sh 'echo test'
             }
         }
+        stage('test if'){
+            when { branch 'master' }
+            steps {
+                echo 'It is executed'
+            }
+        }
         stage('build docker image'){
             steps {
                 sh 'docker build -t $LOCALIMAGE .'
