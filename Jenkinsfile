@@ -6,11 +6,6 @@ pipeline {
     }
     agent any
     stages {
-        stage('test'){
-            steps {
-                sh 'echo test'
-            }
-        }
         stage('build docker image'){
             steps {
                 sh 'docker build -t $LOCALIMAGE .'
